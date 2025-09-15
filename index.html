@@ -135,7 +135,7 @@
         
         .section {
             padding: 80px 20px;
-            max-width: 1200px;
+            /* max-width: 1200px; */
             margin: 0 auto;
         }
         
@@ -152,33 +152,43 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* vertically center content */
         }
         /* Countdown Section */
         
         .countdown-timer {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: nowrap;
+            /* force one row */
             margin-top: 30px;
+            text-align: center;
         }
         
         .time-unit {
             background: rgba(255, 255, 255, 0.1);
-            padding: 30px 20px;
+            padding: 20px 15px;
             border-radius: 15px;
-            min-width: 120px;
+            min-width: 70px;
+            /* smaller min width */
             backdrop-filter: blur(10px);
         }
         
         .time-unit .number {
-            font-size: 3em;
+            font-size: clamp(1rem, 6vw, 3rem);
+            /* auto shrink */
             font-weight: bold;
             display: block;
         }
         
         .time-unit .label {
-            font-size: 1em;
+            font-size: clamp(0.5rem, 2vw, 1rem);
+            /* auto shrink */
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -497,6 +507,8 @@
         <!-- Countdown Section -->
         <section class="section countdown">
             <h2>Counting Down to Forever</h2>
+            <h3>Wednesday,</h3>
+            <h3>12 November 2025</h3>
             <div class="countdown-timer" id="countdown">
                 <div class="time-unit">
                     <span class="number" id="days">00</span>
@@ -540,15 +552,26 @@
             <div class="details-grid">
                 <div class="detail-card">
                     <h3>When</h3>
-                    <p><strong>November 12, 2025</strong><br> Wednesday at 18:00 PM</p>
+                    <p>
+                        <strong>November 12, 2025</strong>
+                    </p>
                 </div>
                 <div class="detail-card">
-                    <h3>Where</h3>
-                    <p><strong>Hotel Furaya</strong><br> Jl. Jend. Sudirman No.72<br> Pekanbaru</p>
+                    <h3>Wedding Vows</h3>
+                    <p>
+                        <strong>Vihara Dharma Loka</strong>
+                        <br> Jl. Dr. Leimena No.41, Pekanbaru
+                        <br> Pekanbaru
+                        <br> 8:00 AM
+                    </p>
                 </div>
                 <div class="detail-card">
                     <h3>Reception</h3>
-                    <p><strong>Immediately Following</strong><br> Same venue<br> Dinner & Dancing until 11:00 PM</p>
+                    <p>
+                        <strong>Hotel Furaya</strong>
+                        <br> Jl. Jend. Sudirman No.72, Pekanbaru
+                        <br> 18:00 PM
+                    </p>
                 </div>
             </div>
         </section>
