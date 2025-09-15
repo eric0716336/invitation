@@ -149,13 +149,42 @@
         /* Countdown */
         
         .countdown {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            position: relative;
+            display: inline-block;
+            /* section height follows image */
+            width: 100%;
             text-align: center;
+            color: white;
+        }
+        
+        .countdown-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            /* responsive */
+        }
+        
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            /* tint */
+        }
+        
+        .countdown-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* vertically center content */
+            align-items: center;
+            padding: 20px;
         }
         /* Countdown Section */
         
@@ -431,6 +460,12 @@
             .invitation-card h1 {
                 font-size: 2em;
             }
+            .countdown {
+                background-size: contain;
+                /* fit whole image */
+                background-position: center top;
+                /* adjust alignment */
+            }
         }
         /* WISH SECTION */
         
@@ -505,26 +540,30 @@
         </section>
 
         <!-- Countdown Section -->
-        <section class="section countdown">
-            <h2>Counting Down to Forever</h2>
-            <h3>Wednesday,</h3>
-            <h3>12 November 2025</h3>
-            <div class="countdown-timer" id="countdown">
-                <div class="time-unit">
-                    <span class="number" id="days">00</span>
-                    <span class="label">Days</span>
-                </div>
-                <div class="time-unit">
-                    <span class="number" id="hours">00</span>
-                    <span class="label">Hours</span>
-                </div>
-                <div class="time-unit">
-                    <span class="number" id="minutes">00</span>
-                    <span class="label">Minutes</span>
-                </div>
-                <div class="time-unit">
-                    <span class="number" id="seconds">00</span>
-                    <span class="label">Seconds</span>
+        <section class="countdown">
+            <img src="./img/Day 1/Look 2/GIE_3071.jpg" alt="Countdown Background" class="countdown-img">
+            <div class="countdown-overlay"></div>
+            <div class="countdown-content">
+                <h2>Counting Down to Forever</h2>
+                <h3>Wednesday,</h3>
+                <h3>12 November 2025</h3>
+                <div class="countdown-timer" id="countdown">
+                    <div class="time-unit">
+                        <span class="number" id="days">00</span>
+                        <span class="label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="hours">00</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="minutes">00</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="seconds">00</span>
+                        <span class="label">Seconds</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -534,14 +573,14 @@
             <h2>Meet the Couple</h2>
             <div class="couple">
                 <div class="person-card">
-                    <div class="person-photo">Groom Photo</div>
                     <h3>The Groom</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p>Son Of Mr.Edy Surya & Mrs.Melati</p>
+                    <div class="person-photo">Groom Photo</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">Bride Photo</div>
                     <h3>The Bride</h3>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Daughter of Mr.Eka Putra Jansen & Mrs.Saniah</p>
                 </div>
             </div>
         </section>
