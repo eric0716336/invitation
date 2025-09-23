@@ -190,49 +190,49 @@ gallery.addEventListener('touchmove', e => {
 // my addition
 
 // my api
-async function fetchWishes() {
-    const wishList = document.getElementById('wishList');
-    const loading = document.getElementById('loading');
-    const error = document.getElementById('error');
+// async function fetchWishes() {
+//     const wishList = document.getElementById('wishList');
+//     const loading = document.getElementById('loading');
+//     const error = document.getElementById('error');
 
-    try {
-        // const response = await fetch('https://api.example.com/wishes'); // Replace with your API URL
-        // if (!response.ok) throw new Error('Network response was not ok');
+//     try {
+//         // const response = await fetch('https://api.example.com/wishes'); // Replace with your API URL
+//         // if (!response.ok) throw new Error('Network response was not ok');
 
-        // const wishes = await response.json();
+//         // const wishes = await response.json();
 
-        wishes = [{
-            name: "Eric",
-            text: "Congrats"
-        }, {
-            name: "Ben",
-            text: "Hell yeah"
-        }];
-        loading.style.display = 'none';
-        // wishList.innerHTML = wishes.map(
-        //     wish => `
-        //         <div>
-        //             <li>${wish.text}</li>
-        //             <li>${wish.text}</li>
-        //         <div>
-        //     `
-        // ).join('');
+//         wishes = [{
+//             name: "Eric",
+//             text: "Congrats"
+//         }, {
+//             name: "Ben",
+//             text: "Hell yeah"
+//         }];
+//         loading.style.display = 'none';
+//         // wishList.innerHTML = wishes.map(
+//         //     wish => `
+//         //         <div>
+//         //             <li>${wish.text}</li>
+//         //             <li>${wish.text}</li>
+//         //         <div>
+//         //     `
+//         // ).join('');
 
-        wishList.innerHTML = wishes.map(
-            wish => `
-                <li>
-                    <div class="wish-name">${wish.name}</div>
-                    <div class="wish-text">${wish.text}</div>
-                </li>`
-        ).join('');
+//         wishList.innerHTML = wishes.map(
+//             wish => `
+//                 <li>
+//                     <div class="wish-name">${wish.name}</div>
+//                     <div class="wish-text">${wish.text}</div>
+//                 </li>`
+//         ).join('');
 
 
-    } catch (err) {
-        console.error(err);
-    }
-}
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
-fetchWishes();
+// fetchWishes();
 
 // my api
 
