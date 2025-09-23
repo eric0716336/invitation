@@ -244,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Extract invitation ID from URL
     const pathParts = window.location.pathname.split("/");
     invitationId = pathParts[pathParts.length - 1]; // e.g. "abc123"
+    // invitationId = 'ayamgoreng';
     console.log("INVITATIONID:", invitationId);
 
     if (invitationId && invitationId !== "index.html" && invitationId !== "") {
@@ -262,13 +263,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const attendanceSelect = document.getElementById("attendance");
                 const guestsField = document.getElementById("guests");
-                const wishField = document.getElementById("wish");
+                const wishField = document.getElementById("wishes");
                 const invitationPaxData = data.invitationData.pax;
+                const rsvpButton = document.getElementById("rsvpbutton");
+                // Disable button until guest is validated
                 if (invitationPaxData) {
-                    guestsField.value = pax;
+                    attendanceSelect.value = "yes";
+                    guestsField.value = invitationPaxData;
                     wishField.value = data.invitationData.message;
+                    attendanceSelect.disabled = true;
                     guestsField.disabled = true;
                     wishField.disabled = true;
+                    rsvpButton.disabled = true;
                 }
 
 
