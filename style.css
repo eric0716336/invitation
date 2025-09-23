@@ -538,3 +538,7 @@ body {
 
 
 /* WISH SECTION */
+
+#guestNameTitle {
+    white-space: pre-line;
+}

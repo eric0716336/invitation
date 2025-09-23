@@ -249,11 +249,20 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("INVITATIONID:", invitationId);
 
     if (invitationId && invitationId !== "index.html" && invitationId !== "") {
-        fetch(`https://yourapi.com/invitations/${invitationId}`)
+        fetch(`http://localhost:3000/invitation/sangjit/${invitationId}`)
             .then(res => res.json())
             .then(data => {
-                // Guest name
-                document.getElementById("guestName").textContent = data.guestName || "Guest";
+                if (data.errMsg) {
+                    throw new Error(data.errMsg);
+                }
+
+                console.log("DATA:", data);
+
+                const titleEl = document.getElementById("guestNameTitle");
+                titleEl.textContent = `
+                    To Mr./Mrs./Ms. 
+                    ${data.name}
+                `;
 
                 // Special message
                 if (data.message) {
@@ -261,9 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("messageSection").style.display = "block";
                 }
             })
-            .catch(err => {
-                console.error("Error fetching invitation:", err);
-                document.getElementById("guestName").textContent = "Guest";
+            .catch(error => {
+                console.error("Error fetching guest name:", error);
+                // Redirect on error too
+                window.location.href = "/index.html"; // or "/my-repo/index.html"
             });
     }
 });
