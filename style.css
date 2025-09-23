@@ -204,12 +204,12 @@ body {
 }
 
 .time-unit {
-    background: rgba(255, 255, 255, 0.1);
+    /* background: rgba(255, 255, 255, 0.1); */
+    /* backdrop-filter: blur(10px); */
     padding: 20px 15px;
     border-radius: 15px;
     min-width: 70px;
     /* smaller min width */
-    backdrop-filter: blur(10px);
 }
 
 .time-unit .number {
