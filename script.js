@@ -228,8 +228,6 @@ async function fetchWishes() {
 
 
     } catch (err) {
-        loading.style.display = 'none';
-        error.style.display = 'block';
         console.error(err);
     }
 }
