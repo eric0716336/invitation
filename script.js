@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.error("Error fetching guest name:", error);
                 // Redirect on error too
-                window.location.href = "/invitation";
+                // window.location.href = "/invitation";
             });
     }
 });
