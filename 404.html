@@ -3,20 +3,706 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Redirecting...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        // On GitHub Pages, any unknown path will serve 404.html.
-        // We just rewrite it back to index.html while keeping the path.
-        (function() {
-            const redirectTo = window.location.protocol + "//" + window.location.host + "/index.html" + window.location.search + window.location.hash;
-            window.location.replace(redirectTo);
-        })();
-    </script>
+    <title>Eric & Fanny Wedding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f8f8;
+            overflow-x: hidden;
+        }
+        /* Open Invitation Overlay */
+        
+        .invitation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: all 0.8s ease-in-out;
+        }
+        
+        .invitation-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.1);
+        }
+        
+        .invitation-card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(0);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .invitation-card h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .invitation-card p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .open-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+        /* Main Content */
+        
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out 0.3s;
+        }
+        
+        .main-content.visible {
+            opacity: 1;
+        }
+        /* Hero Section */
+        
+        .hero {
+            height: 100vh;
+            /* background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f0f0" width="1200" height="800"/><text x="50%" y="50%" text-anchor="middle" fill="%23ccc" font-size="24" font-family="serif">Beautiful Wedding Photo</text></svg>'); */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./img/Day 1/Look 1/GIE_2025.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        /* Section Styles */
+        
+        .section {
+            padding: 80px 20px;
+            /* max-width: 1200px; */
+            margin: 0 auto;
+        }
+        
+        .section h2 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #667eea;
+            font-weight: 300;
+        }
+        /* Countdown */
+        
+        .countdown {
+            position: relative;
+            display: inline-block;
+            /* section height follows image */
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+        
+        .countdown-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            /* responsive */
+        }
+        
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            /* tint */
+        }
+        
+        .countdown-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        /* Countdown Section */
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: nowrap;
+            /* force one row */
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .time-unit {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 15px;
+            border-radius: 15px;
+            min-width: 70px;
+            /* smaller min width */
+            backdrop-filter: blur(10px);
+        }
+        
+        .time-unit .number {
+            font-size: clamp(1rem, 6vw, 3rem);
+            /* auto shrink */
+            font-weight: bold;
+            display: block;
+        }
+        
+        .time-unit .label {
+            font-size: clamp(0.5rem, 2vw, 1rem);
+            /* auto shrink */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        /* Bride & Groom */
+        
+        .couple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .person-card {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .person-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .person-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #999;
+            overflow: hidden;
+        }
+        
+        .person-card h3 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .person-card p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #666;
+        }
+        /* Wedding Details */
+        
+        .wedding-details {
+            background: #f8f8f8;
+            text-align: center;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .detail-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .detail-card h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .detail-card p {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.6;
+        }
+        /* RSVP */
+        
+        .rsvp {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .rsvp-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+        }
+        /* Quote */
+        
+        .quote {
+            background: #f8f8f8;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .quote blockquote {
+            font-size: 2em;
+            line-height: 1.6;
+            color: #667eea;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quote cite {
+            display: block;
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #999;
+            font-style: normal;
+        }
+        /* Gallery */
+        
+        .gallery {
+            padding: 80px 0;
+            overflow: hidden;
+            /* hide scrollbar */
+            position: relative;
+            cursor: grab;
+        }
+        
+        .gallery-container {
+            display: flex;
+            gap: 20px;
+            animation: scroll-left 10s linear infinite;
+            /* infinite auto-scroll */
+        }
+        
+        .gallery-container:hover {
+            animation-play-state: paused;
+            /* pause when hovered */
+        }
+        
+        .gallery-item {
+            flex-shrink: 0;
+            /* width: 300px; */
+            height: 400px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+            /* move half for duplicated items */
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .section h2 {
+                font-size: 2.5em;
+            }
+            .couple {
+                grid-template-columns: 1fr;
+            }
+            .countdown-timer {
+                gap: 15px;
+            }
+            .time-unit {
+                min-width: 80px;
+                padding: 20px 15px;
+            }
+            .time-unit .number {
+                font-size: 2em;
+            }
+            .invitation-card {
+                padding: 40px 30px;
+            }
+            .invitation-card h1 {
+                font-size: 2em;
+            }
+            .countdown {
+                background-size: contain;
+                /* fit whole image */
+                background-position: center top;
+                /* adjust alignment */
+            }
+        }
+        /* WISH SECTION */
+        
+        .wish-section {
+            /* max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .wish-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .wish-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .wish-list li {
+            background: #e0f7fa;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .wish-list li:hover {
+            background: #b2ebf2;
+            color: black;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #777;
+        }
+        
+        .error {
+            text-align: center;
+            color: red;
+        }
+        /* WISH SECTION */
+    </style>
 </head>
 
 <body>
-    <p>Redirecting...</p>
+    <!-- Open Invitation Overlay -->
+    <div class="invitation-overlay" id="invitationOverlay">
+        <div class="invitation-card">
+            <h1>You're Invited</h1>
+            <p>Join us as we celebrate the union of two hearts becoming one. Your presence would make our special day even more meaningful.</p>
+            <button class="open-btn" onclick="openInvitation()">Open Invitation</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Eric & Fanny</h1>
+            <p>Are Getting Married</p>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown">
+            <img src="./img/Day 1/Look 2/GIE_3071.jpg" alt="Countdown Background" class="countdown-img">
+            <div class="countdown-overlay"></div>
+            <div class="countdown-content">
+                <h2>Counting Down to Forever</h2>
+                <h3>Wednesday,</h3>
+                <h3>12 November 2025</h3>
+                <div class="countdown-timer" id="countdown">
+                    <div class="time-unit">
+                        <span class="number" id="days">00</span>
+                        <span class="label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="hours">00</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="minutes">00</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="seconds">00</span>
+                        <span class="label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bride & Groom Section -->
+        <section class="section">
+            <h2>Meet the Couple</h2>
+            <div class="couple">
+                <div class="person-card">
+                    <h3>The Groom</h3>
+                    <p>Son Of Mr.Edy Surya & Mrs.Melati</p>
+                    <div class="person-photo">Groom Photo</div>
+                </div>
+                <div class="person-card">
+                    <div class="person-photo">Bride Photo</div>
+                    <h3>The Bride</h3>
+                    <p>Daughter of Mr.Eka Putra Jansen & Mrs.Saniah</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wedding Details -->
+        <section class="section wedding-details">
+            <h2>Wedding Details</h2>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>When</h3>
+                    <p>
+                        <strong>November 12, 2025</strong>
+                    </p>
+                </div>
+                <div class="detail-card">
+                    <h3>Wedding Vows</h3>
+                    <p>
+                        <strong>Vihara Dharma Loka</strong>
+                        <br> Jl. Dr. Leimena No.41, Pekanbaru
+                        <br> Pekanbaru
+                        <br> 8:00 AM
+                    </p>
+                </div>
+                <div class="detail-card">
+                    <h3>Reception</h3>
+                    <p>
+                        <strong>Hotel Furaya</strong>
+                        <br> Jl. Jend. Sudirman No.72, Pekanbaru
+                        <br> 18:00 PM
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="section rsvp">
+            <h2>RSVP</h2>
+            <div class="rsvp-form">
+                <div id="guestName" style="margin-bottom: 20px; font-size: 1.2em;">
+                    <!-- Guest name will be loaded here via API -->
+                    Loading guest information...
+                </div>
+                <form id="rsvpForm">
+                    <div class="form-group">
+                        <label for="attendance">Will you be attending?</label>
+                        <select id="attendance" name="attendance" required>
+                            <option value="">Please select</option>
+                            <option value="yes">Yes, I'll be there!</option>
+                            <option value="no">Sorry, can't make it</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Number of guest (include yourself)</label>
+                        <select id="guests" name="guests">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="0" style="display: none;">None</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wishes">Wishes for the happy couple</label>
+                        <textarea id="wishes" name="wishes" placeholder="Share your heartfelt wishes..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit RSVP</button>
+                </form>
+            </div>
+
+            <!-- my addition -->
+
+        </section>
+
+        <!-- Quote Section -->
+        <section class="section quote">
+            <h2>Love Quote</h2>
+            <blockquote>
+                "Being deeply loved by someone gives you strength, while loving someone deeply gives you courage."
+            </blockquote>
+            <cite>— Lao Tzu</cite>
+        </section>
+
+        <!-- Gallery Section -->
+        <h2 style="text-align: center; margin-bottom: 50px; color: #667eea; font-size: 3em; font-weight: 300;">Our Journey</h2>
+        <section class="gallery">
+            <div class="gallery-container">
+                <img src="./img/Day 1/Look 1/GIE_2025.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 1/Look 1/GIL_6377.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 1/Look 2/GIE_3071.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 1/Look 2/GIL_7290.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 1/Look 3/GIE_3768.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 1/Look 3/GIL_7642.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 1/GIE_4112.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 1/GIL_8316.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 2/GIE_4685.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 2/GIL_8806.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 3/GIE_5436.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 3/GIL_9245.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 4/GIE_5644.jpg" alt="A beautiful sunset" class="gallery-item">
+                <img src="./img/Day 2/Look 4/GIL_9403.jpg" alt="A beautiful sunset" class="gallery-item">
+
+                <!-- Duplicate images for seamless loop -->
+                <div class="gallery-item">Photo 1</div>
+                <div class="gallery-item">Photo 2</div>
+                <div class="gallery-item">Photo 3</div>
+                <div class="gallery-item">Photo 4</div>
+                <div class="gallery-item">Photo 5</div>
+                <div class="gallery-item">Photo 6</div>
+                <div class="gallery-item">Photo 7</div>
+                <div class="gallery-item">Photo 8</div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="gallery-item">Photo 1</div>
+                <div class="gallery-item">Photo 2</div>
+                <div class="gallery-item">Photo 3</div>
+                <div class="gallery-item">Photo 4</div>
+                <div class="gallery-item">Photo 5</div>
+                <div class="gallery-item">Photo 6</div>
+                <div class="gallery-item">Photo 7</div>
+                <div class="gallery-item">Photo 8</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
