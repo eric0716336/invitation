@@ -943,6 +943,36 @@
         fetchWishes();
 
         // my api
+
+
+
+        // read invitation id
+        let invitationId = null;
+        document.addEventListener("DOMContentLoaded", () => {
+            // Extract invitation ID from URL
+            const pathParts = window.location.pathname.split("/");
+            invitationId = pathParts[pathParts.length - 1]; // e.g. "abc123"
+            console.log("INVITATIONID:", invitationId);
+
+            if (invitationId && invitationId !== "index.html" && invitationId !== "") {
+                fetch(`https://yourapi.com/invitations/${invitationId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        // Guest name
+                        document.getElementById("guestName").textContent = data.guestName || "Guest";
+
+                        // Special message
+                        if (data.message) {
+                            document.getElementById("guestMessage").textContent = data.message;
+                            document.getElementById("messageSection").style.display = "block";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error fetching invitation:", err);
+                        document.getElementById("guestName").textContent = "Guest";
+                    });
+            }
+        });
     </script>
 </body>
 
