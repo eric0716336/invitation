@@ -256,13 +256,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     throw new Error(data.errMsg);
                 }
 
-                console.log("DATA:", data);
-
                 const titleEl = document.getElementById("guestNameTitle");
                 titleEl.textContent = `
                     To Mr./Mrs./Ms. 
-                    ${data.name}
+                    ${data.invitationData.name}
                 `;
+
+                const attendanceSelect = document.getElementById("attendance");
+                const guestsField = document.getElementById("guests");
+                const wishField = document.getElementById("wish");
+                const invitationPaxData = data.invitationData.pax;
+                if (invitationPaxData) {
+                    guestsField.value = pax;
+                    wishField.value = data.invitationData.message;
+                    guestsField.disabled = true;
+                    wishField.disabled = true;
+                }
+
+
 
                 // Special message
                 if (data.message) {
@@ -273,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.error("Error fetching guest name:", error);
                 // Redirect on error too
-                window.location.href = "/index.html"; // or "/my-repo/index.html"
+                window.location.href = "/invitation";
             });
     }
 });
