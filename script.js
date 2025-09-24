@@ -68,14 +68,18 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     e.preventDefault();
 
     const formData = {
-        attendance: document.getElementById('attendance').value,
-        guests: parseInt(document.getElementById('guests').value),
-        wishes: document.getElementById('wishes').value
+        invitationId: invitationId,
+        invitationType: "wedding",
+        attend: document.getElementById('attendance').value,
+        pax: parseInt(document.getElementById('guests').value),
+        message: document.getElementById('wishes').value
     };
+
+    console.log("FORM DATA:", formData);
 
     try {
         // Placeholder for POST API call
-        const response = await fetch('/api/rsvp', {
+        const response = await fetch('http://localhost:3000/invitation/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -248,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("INVITATIONID:", invitationId);
 
     if (invitationId && invitationId !== "index.html" && invitationId !== "") {
-        fetch(`http://localhost:3000/invitation/sangjit/${invitationId}`)
+        fetch(`http://localhost:3000/invitation/wedding/${invitationId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.errMsg) {
