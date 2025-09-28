@@ -296,3 +296,49 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 });
+
+async function loadGuestMessages() {
+    try {
+        const res = await fetch("http://localhost:3000/sangjit/messages"); // <-- replace API
+        const data = await res.json();
+
+        // filter only wedding invitation type
+        const weddingMessages = data.messageList;
+
+        const container = document.getElementById("guestMessages");
+        container.innerHTML = ""; // clear
+
+        if (weddingMessages.length === 0) {
+            container.innerHTML = "<p class='empty-message'>No messages yet.</p>";
+            return;
+        }
+
+        weddingMessages.forEach(({ name, message }) => {
+            const card = document.createElement("div");
+            card.className = "message-card";
+
+            card.innerHTML = `
+          <p class="message-text">"${message}"</p>
+          <p class="message-author">— ${name}</p>
+        `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Error loading messages:", err);
+    }
+}
+
+// load when page ready
+document.addEventListener("DOMContentLoaded", loadGuestMessages);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.querySelector(".invitation-overlay");
+
+    // Example: show overlay after 200ms
+    setTimeout(() => {
+        overlay.classList.add("active");
+    }, 200);
+
+    // Example: hide overlay
+    // overlay.classList.remove("active");
+});
